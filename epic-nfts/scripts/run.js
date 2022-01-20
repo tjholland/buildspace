@@ -13,6 +13,14 @@ const main = async () => {
     // mint another one, for the funs
     txn = await nftContract.makeAnEpicNFT()
     await txn.wait()
+
+    // mint another one, for the funs
+    txn = await nftContract.makeAnEpicNFT()
+    await txn.wait()
+
+    // mint another one, for the funs
+    txn = await nftContract.makeAnEpicNFT()
+    await txn.wait()
 };
 
 const runMain = async () => {
