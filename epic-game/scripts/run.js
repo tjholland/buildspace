@@ -1,5 +1,6 @@
 const main = async () => {
     const gameContractFactory = await hre.ethers.getContractFactory('MyEpicGame');
+    
     const gameContract = await gameContractFactory.deploy(
         ['Leo', 'Aang', 'Pikachu'],         // names
         ["https://i.imgur.com/pKd5Sdk.png", // images
@@ -9,7 +10,7 @@ const main = async () => {
         [100, 50, 25],                      // attack damage values
         "Elon Musk",                        // Boss name
         "https://i.imgur.com/AksR0tt.png",  // Boss image
-        10,                              // Boss hp
+        10000,                              // Boss hp
         50                                  // Boss attack damage
     );
     await gameContract.deployed();
