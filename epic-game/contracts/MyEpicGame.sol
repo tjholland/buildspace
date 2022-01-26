@@ -50,6 +50,10 @@ contract MyEpicGame is ERC721 {
     // mapping of address to token id
     mapping(address => uint256) public nftHolders;
 
+    // events
+    event CharacterNFTMinted(address sender, uint256 tokenId, uint256 characterIndex);
+    event AttackComplete(uint newBossHp, uint newPlayerHp);
+
     // data passed when the contract is first created    
     constructor(
         string[] memory characterNames,
@@ -122,6 +126,30 @@ contract MyEpicGame is ERC721 {
 
         // increment the tokenId for the next person that uses it
         _tokenIds.increment();
+
+        emit CharacterNFTMinted(msg.sender, newItemId, _characterIndex);
+    }
+
+    function checkIfUserHasNFT() public view returns (CharacterAttributes memory) {
+        // get the tokenId of the user's NFT
+        uint256 userNftTokenId = nftHolders[msg.sender];
+        // if the user has a tokenId in the map, return their character
+        if (userNftTokenId > 0) {
+            return nftHolderAttributes[userNftTokenId];
+        }
+        // else, return an empty character
+        else {
+            CharacterAttributes memory emptyStruct;
+            return emptyStruct;
+        }
+    }
+
+    function getAllDefaultCharacters() public view returns (CharacterAttributes[] memory) {
+        return defaultCharacters;
+    }
+
+    function getBigBoss() public view returns (BigBoss memory) {
+        return bigBoss;
     }
 
     function tokenURI(uint256 _tokenId) public view override returns (string memory) {
@@ -185,5 +213,7 @@ contract MyEpicGame is ERC721 {
         // console for ease
         console.log("Player attacked the boss. New boss HP: %s", bigBoss.hp);
         console.log("Boss attacked the player. New player HP: %s", player.hp);
+
+        emit AttackComplete(bigBoss.hp, player.hp);
     }
 }
