@@ -8,23 +8,19 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 // helper functions
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-
 import "hardhat/console.sol";
 import "./libraries/Base64.sol";
 
 contract MyEpicGame is ERC721 {
     // character attributes, will add more later
-    // ideas: clan, 
+    // ideas: clan, class, critChance, defense
     struct CharacterAttributes {
-        uint characterIndex;
+        //uint characterIndex;
         string name;
-        // string class;
         string imageURI;
         uint hp;
         uint maxHp;
         uint attackDamage;
-        // uint critChance;
-        // uint defense;
     }
 
     struct BigBoss {
@@ -57,12 +53,9 @@ contract MyEpicGame is ERC721 {
     // data passed when the contract is first created    
     constructor(
         string[] memory characterNames,
-        // string[] memory characterClasses,
         string[] memory characterImageURIs,
         uint[] memory characterHp,
         uint[] memory characterAttackDamage,
-        // uint[] memory characterCritChance,
-        // uint[] memory characterDefense,
         string memory bossName,
         string memory bossImageURI,
         uint bossHp,
@@ -83,15 +76,12 @@ contract MyEpicGame is ERC721 {
 
         for(uint i = 0; i < characterNames.length; i += 1) {
             defaultCharacters.push(CharacterAttributes({
-                characterIndex: i,
+                //characterIndex: i,
                 name: characterNames[i],
-                // class: characterClasses[i],
                 imageURI: characterImageURIs[i],
                 hp: characterHp[i],
                 maxHp: characterHp[i],
                 attackDamage: characterAttackDamage[i]
-                // critChance: characterCritChance[i],
-                // defense: characterDefense[i]
             }));
 
             CharacterAttributes memory c = defaultCharacters[i];
@@ -111,7 +101,7 @@ contract MyEpicGame is ERC721 {
 
         // map the tokenId to their character's attributes
         nftHolderAttributes[newItemId] = CharacterAttributes({
-            characterIndex: _characterIndex,
+            //characterIndex: _characterIndex,
             name: defaultCharacters[_characterIndex].name,
             imageURI: defaultCharacters[_characterIndex].imageURI,
             hp: defaultCharacters[_characterIndex].hp,
